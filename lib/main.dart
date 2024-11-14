@@ -26,57 +26,6 @@ import 'persona/firebase_options.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-// void callbackDispatcher() {
-//   Workmanager().executeTask((task, inputData) async {
-//     // print("Background Task Running: $task");
-//     await NotificationHelper.performBackgroundTask();
-//
-//     return Future.value(true);
-//   });
-// }
-
-// void _requestPermissions() async {
-//   if (await Permission.ignoreBatteryOptimizations.isDenied) {
-//     await Permission.ignoreBatteryOptimizations.request();
-//   }
-//   if (await Permission.notification.isDenied) {
-//     await Permission.notification.request();
-//   }
-// }
-
-// void _startBackgroundFetch() async {
-//   await BackgroundFetch.configure(
-//     BackgroundFetchConfig(
-//       minimumFetchInterval: 15, // Fetch interval in minutes
-//       stopOnTerminate: false, // Continue after termination
-//       enableHeadless: true, // Enable headless mode
-//     ),
-//     _onBackgroundFetch,
-//     _onBackgroundFetchTimeout,
-//   );
-// }
-//
-// void _onBackgroundFetch(String taskId) async {
-//   print("[BackgroundFetch] Event received: $taskId");
-//
-//   // Perform your background task here, such as fetching data from a server.
-//
-//   BackgroundFetch.finish(taskId);
-// }
-//
-// void _onBackgroundFetchTimeout(String taskId) {
-//   print("[BackgroundFetch] Timeout: $taskId");
-//   BackgroundFetch.finish(taskId);
-// }
-//
-// void backgroundFetchHeadlessTask(String taskId) async {
-//   print("[BackgroundFetch] Headless event received: $taskId");
-//
-//   // Handle headless background task here.
-//
-//   BackgroundFetch.finish(taskId);
-// }
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
