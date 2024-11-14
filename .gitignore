@@ -42,7 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /Final App
-lib/Screens/download.dart
-lib/persona
 pubspec.lock
 .metadata
