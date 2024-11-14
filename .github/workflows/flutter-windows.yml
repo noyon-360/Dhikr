@@ -3,51 +3,35 @@ name: Flutter Windows Desktop CI/CD with Release
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on changes to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Using a Windows runner for building the Windows application
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Install Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
-
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v3
         with:
-          path: |
-            %LOCALAPPDATA%\Pub\Cache
-            %USERPROFILE%\.flutter
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter-
+          flutter-version: 'stable'  # Use the stable version of Flutter
 
-      - name: Flutter pub get
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Run tests
-        run: flutter test
+      - name: Run Windows tests
+        run: flutter test --platform windows  # Run the tests for the Windows platform
 
       - name: Build Windows application
-        run: flutter build windows --release
+        run: flutter build windows  # Build the Windows application
 
-      - name: Upload Windows application artifact
+      - name: Archive build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: windows-app
-          path: build/windows/runner/Release/
-
-      - name: Create GitHub Release
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token secret created earlier
-          tag: v1.0.0  # Adjust this as needed
-          name: "Release v1.0.0"
-          body: "This is an automated release of the Flutter Windows application."
-          draft: false
-          prerelease: false
-          files: build/windows/runner/Release/*.exe
+          name: windows-build
+          path: build/windows/runner/Release/dhikr.exe  # Path to your built Windows application
