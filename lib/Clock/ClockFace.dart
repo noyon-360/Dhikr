@@ -47,146 +47,144 @@ class _ClockFaceState extends State<ClockFace> {
       onPanStart: (details) {
         lastPosition = details.localPosition;
       },
-      child: Center(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(
-              child: Stack(
-                children: [
-                  CustomPaint(
-                    size: const Size(300, 300),
-                    painter: ClockPainter(
-                      numbers,
-                      timerProvider.angleOffset,
-                      timerProvider.selectedNumber,
+            Stack(
+              children: [
+                CustomPaint(
+                  size: const Size(300, 300),
+                  painter: ClockPainter(
+                    numbers,
+                    timerProvider.angleOffset,
+                    timerProvider.selectedNumber,
+                  ),
+                ),
+                Positioned.fill(
+                  child: Center(
+                    child: Stack(
+                      children: List.generate(numbers.length, (index) {
+                        double fixedPositionAngle = 0.0;
+        
+                        int selectedIndex =
+                            numbers.indexOf(timerProvider.selectedNumber);
+                        double selectedNumberAngle = (pi / 6) * selectedIndex -
+                            timerProvider.angleOffset;
+        
+                        double calculatedAngleOffset =
+                            fixedPositionAngle - selectedNumberAngle;
+                        double angle = (pi / 6) * index +
+                            pi / 2 +
+                            timerProvider.angleOffset +
+                            calculatedAngleOffset;
+                        double radius = 120;
+                        double x = 150 + radius * cos(angle);
+                        double y = 150 + radius * sin(angle);
+        
+                        return Positioned(
+                          left: x - 25,
+                          top: y - 25,
+                          width: 50,
+                          height: 50,
+                          child: GestureDetector(
+                            onTap: () =>
+                                timerProvider.selectNumber(numbers[index]),
+                            child: Container(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                   ),
-                  Positioned.fill(
-                    child: Center(
-                      child: Stack(
-                        children: List.generate(numbers.length, (index) {
-                          double fixedPositionAngle = 0.0;
-
-                          int selectedIndex =
-                              numbers.indexOf(timerProvider.selectedNumber);
-                          double selectedNumberAngle = (pi / 6) * selectedIndex -
-                              timerProvider.angleOffset;
-
-                          double calculatedAngleOffset =
-                              fixedPositionAngle - selectedNumberAngle;
-                          double angle = (pi / 6) * index +
-                              pi / 2 +
-                              timerProvider.angleOffset +
-                              calculatedAngleOffset;
-                          double radius = 120;
-                          double x = 150 + radius * cos(angle);
-                          double y = 150 + radius * sin(angle);
-
-                          return Positioned(
-                            left: x - 25,
-                            top: y - 25,
-                            width: 50,
-                            height: 50,
-                            child: GestureDetector(
-                              onTap: () =>
-                                  timerProvider.selectNumber(numbers[index]),
-                              child: Container(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: ClipPath(
-                      clipper: TopHalfClipper(),
-                      child: Container(
-                        height: 150,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primaryColor,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 80,
-                              child: Image.asset("Assets/Images/Dhikr Logo.png"),
-                            ),
-                            const Text(
-                              "Dhikr",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const Text(
-                              "أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ",
-                              style: TextStyle(
-                                fontFamily: 'ArabicFont',
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 142,
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: ClipPath(
+                    clipper: TopHalfClipper(),
                     child: Container(
+                      height: 150,
                       decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            color: Colors.black12,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
+                        color: AppColors.primaryColor,
                       ),
-                      child: const Divider(
-                        color: Colors.green,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 60,
-                    left: 0,
-                    right: 0,
-                    child: Center(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "${timerProvider.selectedNumber} Minute",
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white),
+                          SizedBox(
+                            height: 80,
+                            child: Image.asset("Assets/Images/Dhikr Logo.png"),
                           ),
-                          IconButton(
-                            onPressed: () => timerProvider.toggleTimer(context),
-                            iconSize: 38,
-                            icon: Icon(
-                              timerProvider.isTimerRunning
-                                  ? Icons.pause_circle_filled
-                                  : Icons.play_circle_filled,
+                          const Text(
+                            "Dhikr",
+                            style: TextStyle(
+                              fontSize: 24,
                               color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text(
+                            "أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ",
+                            style: TextStyle(
+                              fontFamily: 'ArabicFont',
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 142,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          color: Colors.black12,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                    child: const Divider(
+                      color: Colors.green,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 60,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "${timerProvider.selectedNumber} Minute",
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.white),
+                        ),
+                        IconButton(
+                          onPressed: () => timerProvider.toggleTimer(context),
+                          iconSize: 38,
+                          icon: Icon(
+                            timerProvider.isTimerRunning
+                                ? Icons.pause_circle_filled
+                                : Icons.play_circle_filled,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
             if (Platform.isAndroid || Platform.isIOS)
               Padding(
