@@ -24,9 +24,6 @@ jobs:
           
           # Add flutter/bin to PATH
           echo "$(pwd)/flutter/bin" >> $GITHUB_PATH
-          
-          # Check Flutter setup
-          flutter doctor
 
       - name: Install dependencies
         run: flutter pub get
