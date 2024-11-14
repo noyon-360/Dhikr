@@ -411,7 +411,7 @@ class _ListofdhikrsState extends State<Listofdhikrs>
             _searchBar ? SizedBox(width: 0,) : Padding(
               padding: const EdgeInsets.only(right: 10),
               child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) => const Download()));
                   },
                   child: Icon(Icons.download)),
@@ -583,10 +583,10 @@ class _ListofdhikrsState extends State<Listofdhikrs>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Download()));
-                      }, icon: Icon(Icons.download)),
-                      Spacer(),
+                      // IconButton(onPressed: (){
+                      //   Navigator.push(context, MaterialPageRoute(builder: (context) => Download()));
+                      // }, icon: Icon(Icons.download)),
+                      // Spacer(),
                       const Text('Switch Translation:'),
                       const SizedBox(width: 10),
                       buildTranslationSelector(

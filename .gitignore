@@ -44,3 +44,5 @@ app.*.map.json
 /Final App
 lib/Screens/download.dart
 lib/persona
+pubspec.lock
+.metadata

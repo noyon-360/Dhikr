@@ -87,7 +87,7 @@ Future<void> main() async {
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await windowManager.ensureInitialized();
     await localNotifier.setup(
-      appName: 'dhikrs',
+      appName: 'Dhikrs',
       shortcutPolicy: ShortcutPolicy.requireCreate,
     );
     WindowManager.instance.setMinimumSize(const Size(1024, 768));
