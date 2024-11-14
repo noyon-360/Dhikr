@@ -3,14 +3,14 @@ name: Flutter Windows Desktop CI/CD with Release
 on:
   push:
     branches:
-      - main  # Trigger on changes to the main branch
+      - main
   pull_request:
     branches:
-      - main  # Trigger on pull requests to the main branch
+      - main
 
 jobs:
   build:
-    runs-on: windows-latest  # Using a Windows runner for building the Windows application
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -18,22 +18,27 @@ jobs:
 
       - name: Set up Flutter
         run: |
+          # Clone the Flutter repository and set FLUTTER_HOME
           git clone https://github.com/flutter/flutter.git --branch stable --depth 1
           echo "##vso[task.setvariable variable=FLUTTER_HOME]$(pwd)/flutter"
-          echo "$FLUTTER_HOME/bin" >> $GITHUB_PATH
+          
+          # Add flutter/bin to PATH
+          echo "$(pwd)/flutter/bin" >> $GITHUB_PATH
+          
+          # Check Flutter setup
           flutter doctor
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Run Windows tests
-        run: flutter test --platform windows  # Run the tests for the Windows platform
+        run: flutter test --platform windows
 
       - name: Build Windows application
-        run: flutter build windows  # Build the Windows application
+        run: flutter build windows
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: windows-build
-          path: build/windows/runner/Release/dhikr.exe  # Path to your built Windows application
+          path: build/windows/runner/Release/dhikr.exe
