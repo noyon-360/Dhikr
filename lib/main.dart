@@ -1,13 +1,11 @@
 import 'dart:io';
 
-// import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:launch_at_startup/launch_at_startup.dart';
 
-import 'package:local_notifier/local_notifier.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:dhikrs/Controller/Provider/AllahNamesProvider.dart';
@@ -18,13 +16,12 @@ import 'package:dhikrs/Controller/Provider/UserSavedProvider.dart';
 import 'package:dhikrs/ListOfAllName/dhikrs.dart';
 import 'package:dhikrs/ListOfAllName/ListOfName.dart';
 import 'package:dhikrs/Screens/HomeScreen.dart';
-import 'package:window_manager/window_manager.dart';
+
 
 import 'persona/firebase_options.dart';
-// import 'package:workmanager/workmanager.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,15 +29,15 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    await windowManager.ensureInitialized();
-    await localNotifier.setup(
-      appName: 'Dhikrs',
-      shortcutPolicy: ShortcutPolicy.requireCreate,
-    );
-    WindowManager.instance.setMinimumSize(const Size(1024, 768));
-  }
+  //
+  // if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  //   await windowManager.ensureInitialized();
+  //   await localNotifier.setup(
+  //     appName: 'Dhikrs',
+  //     shortcutPolicy: ShortcutPolicy.requireCreate,
+  //   );
+  //   // WindowManager.instance.setMinimumSize(const Size(1024, 768));
+  // }
 
   if (!kIsWeb && !Platform.isAndroid && !Platform.isIOS) {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -76,7 +73,8 @@ Future<void> main() async {
             iOS: initializationSettingsDarwin,
             linux: initializationSettingsLinux,
             macOS: initializationSettingsDarwin);
-
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
