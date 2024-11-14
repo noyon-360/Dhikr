@@ -16,14 +16,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Flutter
+      - name: Set up Flutter SDK
         run: |
-          # Clone the Flutter repository and set FLUTTER_HOME
+          # Clone Flutter SDK from GitHub (make sure to check out the correct branch)
           git clone https://github.com/flutter/flutter.git --branch stable --depth 1
-          echo "##vso[task.setvariable variable=FLUTTER_HOME]$(pwd)/flutter"
-          
-          # Add flutter/bin to PATH
+          # Add flutter/bin directory to the PATH
           echo "$(pwd)/flutter/bin" >> $GITHUB_PATH
+          # Verify flutter installation by running flutter doctor
+          flutter doctor
 
       - name: Install dependencies
         run: flutter pub get
