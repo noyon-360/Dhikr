@@ -21,7 +21,8 @@ import 'package:dhikrs/Screens/HomeScreen.dart';
 import 'persona/firebase_options.dart';
 
 
-
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,8 +74,7 @@ Future<void> main() async {
             iOS: initializationSettingsDarwin,
             linux: initializationSettingsLinux,
             macOS: initializationSettingsDarwin);
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
